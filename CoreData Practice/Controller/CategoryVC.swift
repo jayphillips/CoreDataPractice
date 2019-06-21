@@ -8,17 +8,18 @@
 
 import UIKit
 import CoreData
-
+// Defining the persistent container to save to and load from CoreData.
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
 class CategoryVC: UIViewController {
-    
+    //Create an empty array of categories of type Category from the CoreData model.
     var categories = [Category]()
 
     @IBOutlet weak var categoryTblView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Define the tableview datasource and delegate.
         categoryTblView.dataSource = self
         categoryTblView.delegate = self
         
@@ -62,7 +63,7 @@ class CategoryVC: UIViewController {
     }
     
 }
-
+//MARK: - TableView Methods
 extension CategoryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
@@ -76,6 +77,10 @@ extension CategoryVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             return CategoryCell()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "itemVC", sender: self)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
